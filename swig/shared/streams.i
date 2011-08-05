@@ -43,7 +43,7 @@ class wxRubyInputStream : public wxInputStream
 	  memcpy(buffer, RSTRING_PTR(read_data), m_lastlength);
 	  return m_lastlength;
 	}
-	wxRubyInputStream& Read(void *buffer, size_t size) {
+	wxInputStream& Read(void *buffer, size_t size) {
 	  VALUE read_data = rb_funcall(m_rbio, rb_intern("read"), 
 								   1, INT2NUM(size));
       m_lastlength = RSTRING_LEN(read_data);
@@ -101,7 +101,7 @@ class wxRubyOutputStream : public wxOutputStream
 	off_t TellO() {
 	  return NUM2INT( rb_funcall( m_rbio, rb_intern("tell"), 0) );
 	}
-	wxRubyOutputStream& Write(const void *buffer, size_t size) {
+	wxOutputStream& Write(const void *buffer, size_t size) {
 	  VALUE write_data = rb_str_new((const char *)buffer, size);
       VALUE ret_val = rb_funcall(m_rbio, rb_intern("write"), 1,
                                  write_data);
